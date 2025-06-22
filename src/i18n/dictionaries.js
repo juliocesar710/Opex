@@ -8,6 +8,15 @@ export const dictionaries = {
       crews: 'Tripulações',
       about: 'Sobre',
     },
+     intro: {
+      title: 'Bem-vindo à OnePieceDex!',
+      description: 'Descubra informações sobre personagens, tripulações e tudo do mundo de One Piece.',
+    },
+     character:{
+      name: 'Nome',
+      bounty: 'Recompensa',
+      crew: 'Tripulação',
+    }
   },
   'en-US': {
     header: {
@@ -16,5 +25,14 @@ export const dictionaries = {
       crews: 'Crews',
       about: 'About',
     },
+     intro: {
+      title: 'Welcome to OnePieceDex!',
+      description: 'Explore information about characters, crews, and everything from the world of One Piece.',
+    },
+    character:{
+      name: 'Name',
+      bounty: 'Bounty',
+      crew: 'Crew',
+    }
   },
 }
