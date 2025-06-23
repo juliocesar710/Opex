@@ -1,29 +1,31 @@
-import { useEffect, useState } from 'react'
-import { fetchAllCharacters } from '../api/character'
-import CharacterCard from './CharacterCard'
+import { useEffect, useState } from "react";
+import { fetchAllCharacters } from "../api/character";
+import CharacterCard from "./CharacterCard";
 
 export default function CharacterGrid() {
-  const [characters, setCharacters] = useState([])
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState(null)
+  const [characters, setCharacters] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  console.log("infos", characters);
 
   useEffect(() => {
     async function loadCharacters() {
       try {
-        const data = await fetchAllCharacters()
-        setCharacters(data)
+        const data = await fetchAllCharacters();
+        setCharacters(data);
       } catch (err) {
-        setError(err.message)
+        setError(err.message);
       } finally {
-        setLoading(false)
+        setLoading(false);
       }
     }
 
-    loadCharacters()
-  }, [])
+    loadCharacters();
+  }, []);
 
-  if (loading) return <p className="text-center">Carregando personagens...</p>
-  if (error) return <p className="text-center text-red-500">Erro: {error}</p>
+  if (loading) return <p className="text-center">Carregando personagens...</p>;
+  if (error) return <p className="text-center text-red-500">Erro: {error}</p>;
 
   return (
     <section className="bg-parchment py-10 px-4 md:px-8">
@@ -31,12 +33,14 @@ export default function CharacterGrid() {
         {characters.map((char) => (
           <CharacterCard
             key={char.id}
+            id={char.id}
             name={char.name}
             bounty={char.bounty}
             crew={char.crew}
+            imageUrl={char.imageUrl}
           />
         ))}
       </div>
     </section>
-  )
+  );
 }

@@ -15,3 +15,14 @@ export async function fetchAllCharacters() {
     )
   }
 }
+
+export async function fetchCharacterById(id) {
+  try {
+    const response = await api.get(`/${id}`);
+    return response.data;
+  } catch (error) {
+    throw new Error(
+      error.response?.data?.message || "Erro ao buscar personagem"
+    );
+  }
+}
