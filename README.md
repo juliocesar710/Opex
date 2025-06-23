@@ -1,12 +1,124 @@
-# React + Vite
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+# 🏴 OnePieceDex (Opex)
 
-Currently, two official plugins are available:
+Este repositório contém um de dois projetos que juntos formam a **OnePieceDex** — uma "pokedex" inspirada no mundo de *One Piece*:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **API**: Backend em Node.js com Express e Prisma (porta `3000`) está no [link](https://github.com/juliocesar710/API_One_Piece)
+- **Frontend**: App React + Vite + Tailwind, dockerizado com Nginx (porta `5173`)
 
-## Expanding the ESLint configuration
+> ⚠️ Ainda não há deploy unificado. Para rodar localmente, clone este repositório e use Docker Compose conforme explicado abaixo.
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+---
+
+## 📁 Estrutura do projeto
+
+```
+
+/ (root)
+├── API\_One\_Piece/        ← Backend (Express + Prisma)
+├── Opex/                 ← Frontend (React + Vite + Tailwind) (Você está baixando esta parte)
+└── docker-compose.yml    ← Orquestração Docker (API + Front + DB) estará no final do Readme.md para vc copiar e colar
+
+````
+
+---
+
+## 🚀 Como rodar localmente
+
+### 1. Clone este repositório
+
+```bash
+git clone https://github.com/juliocesar710/Opex.git
+cd Opex
+````
+
+### 2. Tenha Docker e Docker Compose instalados
+
+* [Instalar Docker Desktop](https://www.docker.com/products/docker-desktop)
+* [Instalar Docker Compose](https://docs.docker.com/compose/install/)
+
+### 3. Verifique a estrutura
+
+Confirme que o repositório está assim:
+
+```
+Root/
+├── API_One_Piece/ -> acesse o link do inicio
+│   ├── src/
+│   ├── Dockerfile
+│   ├── prisma/
+│   └── package.json
+│
+├── Opex/ -> está clonando este
+│   ├── src/
+│   ├── public/
+│   ├── Dockerfile
+│   └── package.json
+│
+└── docker-compose.yml
+```
+
+### 4. Suba os containers com Docker Compose
+
+```bash
+docker-compose up --build
+```
+
+Esse comando irá iniciar três serviços:
+
+* `db`: PostgreSQL (porta 5432)
+* `api`: Backend Express (porta 3000)
+* `frontend`: App React (porta 5173)
+
+### 5. Acesse no navegador
+
+* Frontend: [http://localhost:5173](http://localhost:5173)
+* API: [http://localhost:3000/characters](http://localhost:3000/characters)
+
+---
+
+docker-compose.yml
+
+```
+version: "3.8"
+
+services:
+  db:
+    image: postgres:15
+    restart: always
+    container_name: postgres_opex
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: one_piece
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  api:
+    build: ./API_One_Piece
+    container_name: api_opex
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
+    environment:
+      DATABASE_URL: "postgresql://postgres:postgres@db:5432/one_piece"
+    volumes:
+      - ./API_One_Piece:/app
+    working_dir: /app
+    command: sh -c "npx prisma migrate deploy && node src/server.js" #&& npx prisma db seed
+
+  frontend:
+    build: ./Opex
+    container_name: frontend_opex
+    ports:
+      - "5173:80" # Porta do host → nginx no container
+    depends_on:
+      - api
+
+volumes:
+  postgres_data:
+
+```
