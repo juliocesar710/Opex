@@ -16,6 +16,14 @@ export const dictionaries = {
       name: 'Nome',
       bounty: 'Recompensa',
       crew: 'Tripulação',
+    },
+    detailsCharacter:{
+      basicInfo: 'Informações Básicas',
+      role: 'Função',
+      status: 'Status',
+      fruit: 'Akuma no Mi',
+      loading: 'Carregando...',
+      origin: 'Origem',
     }
   },
   'en-US': {
@@ -33,6 +41,14 @@ export const dictionaries = {
       name: 'Name',
       bounty: 'Bounty',
       crew: 'Crew',
+    }, 
+    detailsCharacter:{
+      basicInfo: 'Basic Information',
+      role: 'Role',
+      status: 'Status',
+      fruit: 'Akuma no Mi',
+      loading: 'Loading...',
+      origin: 'Origin',
     }
   },
 }
