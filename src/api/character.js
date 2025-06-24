@@ -26,3 +26,16 @@ export async function fetchCharacterById(id) {
     );
   }
 }
+
+export async function fetchCharactersByName(name) {
+  try {
+    const response = await api.get(`/search`, {
+      params: { name },
+    });
+    return response.data;
+  } catch (error) {
+    throw new Error(
+      error.response?.data?.message || 'Erro ao buscar personagens pelo nome'
+    );
+  }
+}

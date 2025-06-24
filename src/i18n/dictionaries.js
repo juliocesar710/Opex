@@ -24,6 +24,7 @@ export const dictionaries = {
       fruit: 'Akuma no Mi',
       loading: 'Carregando...',
       origin: 'Origem',
+      details: 'Detalhes',
     }
   },
   'en-US': {
@@ -49,6 +50,7 @@ export const dictionaries = {
       fruit: 'Akuma no Mi',
       loading: 'Loading...',
       origin: 'Origin',
+      details: 'Details',
     }
   },
 }
