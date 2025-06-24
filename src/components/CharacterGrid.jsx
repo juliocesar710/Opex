@@ -7,7 +7,6 @@ export default function CharacterGrid() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  console.log("infos", characters);
 
   useEffect(() => {
     async function loadCharacters() {
