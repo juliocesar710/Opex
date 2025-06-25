@@ -1,3 +1,4 @@
+import CharacterFilter from '../components/CharacterFilter';
 import CharacterGrid from '../components/CharacterGrid';
 import CharacterSearch from '../components/CharacterSearch';
 import Header from '../components/Header';
@@ -9,6 +10,7 @@ export default function Home() {
   <Header/>
   <IntroSection/>
   <CharacterSearch/>
+  <CharacterFilter/>
   <CharacterGrid/>
   </>;
 }
