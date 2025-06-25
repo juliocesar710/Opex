@@ -39,3 +39,21 @@ export async function fetchCharactersByName(name) {
     );
   }
 }
+
+export async function fetchCharactersByFilters(filters) {
+  try {
+    // Remove valores vazios/nulos antes de enviar
+    const cleanFilters = Object.fromEntries(
+      Object.entries(filters).filter(([value]) => value !== '' && value !== null)
+    );
+    
+    const response = await api.get('/filter', {
+      params: cleanFilters,
+    });
+    return response.data;
+  } catch (error) {
+    throw new Error(
+      error.response?.data?.message || 'Erro ao filtrar personagens'
+    );
+  }
+}
